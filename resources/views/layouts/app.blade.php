@@ -135,21 +135,44 @@ body::before{
                         <span class="hidden sm:block text-slate-200 font-semibold">{{ auth()->user()->name }}</span>
                         <span class="material-symbols-rounded text-slate-400 text-lg">expand_more</span>
                     </button>
-                    <!-- Dropdown Auth -->
-                    <div id="user-dropdown" class="hidden" style="position: absolute; right: 0; top: 100%; margin-top: 0.75rem; width: 14rem; background-color: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 0.75rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); padding: 0.5rem 0; z-index: 50;">
-                        <div class="px-4 py-2 border-b border-white/5">
-                            <p class="text-xs text-slate-400">Conectado como</p>
-                            <p class="text-xs font-bold text-white truncate">{{ auth()->user()->email }}</p>
+                    <!-- Dropdown Auth Estético (Conforme a AGENTS.md) -->
+                    <div id="user-dropdown" class="hidden shadow-2xl" style="position: absolute; right: 0; top: 100%; margin-top: 0.75rem; width: 16rem; background-color: #1e2638; border: 1px solid rgba(255,255,255,0.1); border-radius: 1.25rem; box-shadow: 0 20px 40px rgba(0,0,0,0.6); padding: 1rem; z-index: 9999;">
+                        <!-- Encabezado de Usuario -->
+                        <div style="border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.85rem; margin-bottom: 0.75rem;">
+                            <span class="block text-[0.65rem] font-bold text-slate-400 uppercase tracking-wider" style="margin-bottom: 0.35rem; line-height: 1;">Conectado como</span>
+                            <div class="flex items-center gap-2.5" style="margin-top: 0.35rem;">
+                                <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shrink-0 shadow-md" style="background-color: #c79c5e; color: #0a0f18;">
+                                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <p class="text-xs font-bold text-white truncate" style="line-height: 1.2;">{{ auth()->user()->name }}</p>
+                                    <p class="text-[0.7rem] text-slate-400 truncate" style="line-height: 1.2; margin-top: 0.15rem;">{{ auth()->user()->email }}</p>
+                                </div>
+                            </div>
                         </div>
-                        <a href="{{ route('compras.index') }}" class="block text-sm text-slate-300 hover:bg-white/5 hover:text-white flex items-center transition-colors" style="gap: 0.5rem; padding: 0.6rem 1rem;"><span class="material-symbols-rounded" style="font-size: 18px;">history</span> Mis compras (historial)</a>
-                        <a href="{{ route('settings') }}" class="block text-sm text-slate-300 hover:bg-white/5 hover:text-white flex items-center transition-colors" style="gap: 0.5rem; padding: 0.6rem 1rem;"><span class="material-symbols-rounded" style="font-size: 18px;">settings</span> Configuración</a>
-                        <div class="border-t border-white/5" style="margin: 0.5rem 0;"></div>
-                        <form method="POST" action="{{ route('logout') }}" id="logout-form">
-                            @csrf
-                            <button type="submit" class="w-full text-left text-sm text-red-400 hover:bg-white/5 flex items-center transition-colors cursor-pointer" style="gap: 0.5rem; padding: 0.6rem 1rem;">
-                                <span class="material-symbols-rounded" style="font-size: 18px;">logout</span> Cerrar sesión
-                            </button>
-                        </form>
+
+                        <!-- Opciones del Menú -->
+                        <div class="flex flex-col gap-1">
+                            <a href="{{ route('compras.index') }}" class="flex items-center text-xs font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-all rounded-xl" style="padding: 0.65rem 0.85rem; gap: 0.65rem;">
+                                <span class="material-symbols-rounded text-base shrink-0" style="font-size: 18px; color: #c79c5e;">history</span>
+                                <span>Mis compras (historial)</span>
+                            </a>
+
+                            <a href="{{ route('settings') }}" class="flex items-center text-xs font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-all rounded-xl" style="padding: 0.65rem 0.85rem; gap: 0.65rem;">
+                                <span class="material-symbols-rounded text-base shrink-0" style="font-size: 18px; color: #c79c5e;">settings</span>
+                                <span>Configuración</span>
+                            </a>
+
+                            <div style="border-top: 1px solid rgba(255,255,255,0.08); margin-top: 0.5rem; padding-top: 0.5rem;">
+                                <form method="POST" action="{{ route('logout') }}" id="logout-form">
+                                    @csrf
+                                    <button type="submit" class="w-full flex items-center text-xs font-bold text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all rounded-xl cursor-pointer" style="padding: 0.65rem 0.85rem; gap: 0.65rem; border: none; background: transparent;">
+                                        <span class="material-symbols-rounded text-base shrink-0" style="font-size: 18px; color: #ef4444;">logout</span>
+                                        <span>Cerrar sesión</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             @else
