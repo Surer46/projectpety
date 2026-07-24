@@ -143,6 +143,17 @@ class DatabaseSeeder extends Seeder
             'model_id' => $almacenId,
         ]);
 
+        // Cliente
+        DB::table('users')->insertGetId([
+            'name' => 'Juan Pérez (Cliente)',
+            'username' => 'juan.perez',
+            'email' => 'juan.perez@example.com',
+            'password' => Hash::make('password123'),
+            'is_active' => 1,
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
         // 3. Sucursal 'Cafeteria PETY'
         DB::table('branches')->insert([
             'name' => 'Cafeteria PETY',

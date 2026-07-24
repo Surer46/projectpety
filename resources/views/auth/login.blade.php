@@ -101,30 +101,38 @@
                 <span class="text-[0.7rem] font-bold text-slate-400 uppercase tracking-wider">Cuentas de Prueba Rápidas</span>
             </div>
             
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <div class="grid grid-cols-2 gap-2">
                 <!-- Cuentas -->
                 <button type="button" 
                         onclick="fillDemoAccount('oscar@cafeteriapety.com', 'password123')"
                         class="flex flex-col items-center justify-center text-center border border-white/5 hover:border-[#c79c5e]/50 hover:bg-white/5 transition-all text-xs cursor-pointer"
                         style="padding: 0.65rem 0.5rem; border-radius: 0.75rem; background: rgba(15, 23, 42, 0.4);">
-                    <span class="font-bold text-amber-400 truncate w-full">👑 Oscar</span>
-                    <span class="text-[0.65rem] text-slate-400">Dueño</span>
+                    <span class="font-bold text-amber-400 truncate w-full">👑 Oscar Dueño</span>
+                    <span class="text-[0.65rem] text-slate-400">Rol: Dueño (Administrador)</span>
+                </button>
+
+                <button type="button" 
+                        onclick="fillDemoAccount('juan.perez@example.com', 'password123')"
+                        class="flex flex-col items-center justify-center text-center border border-white/5 hover:border-[#c79c5e]/50 hover:bg-white/5 transition-all text-xs cursor-pointer"
+                        style="padding: 0.65rem 0.5rem; border-radius: 0.75rem; background: rgba(15, 23, 42, 0.4);">
+                    <span class="font-bold text-emerald-400 truncate w-full">🛒 Juan Pérez</span>
+                    <span class="text-[0.65rem] text-slate-400">Rol: Cliente</span>
                 </button>
 
                 <button type="button" 
                         onclick="fillDemoAccount('laura@cafeteriapety.com', 'password123')"
                         class="flex flex-col items-center justify-center text-center border border-white/5 hover:border-[#c79c5e]/50 hover:bg-white/5 transition-all text-xs cursor-pointer"
                         style="padding: 0.65rem 0.5rem; border-radius: 0.75rem; background: rgba(15, 23, 42, 0.4);">
-                    <span class="font-bold text-slate-200 truncate w-full">👩‍💼 Laura</span>
-                    <span class="text-[0.65rem] text-slate-400">Gerente</span>
+                    <span class="font-bold text-slate-200 truncate w-full">👩‍💼 Laura Gerente</span>
+                    <span class="text-[0.65rem] text-slate-400">Rol: Gerente</span>
                 </button>
 
                 <button type="button" 
                         onclick="fillDemoAccount('carlos@cafeteriapety.com', 'password123')"
                         class="flex flex-col items-center justify-center text-center border border-white/5 hover:border-[#c79c5e]/50 hover:bg-white/5 transition-all text-xs cursor-pointer"
                         style="padding: 0.65rem 0.5rem; border-radius: 0.75rem; background: rgba(15, 23, 42, 0.4);">
-                    <span class="font-bold text-slate-200 truncate w-full">💳 Carlos</span>
-                    <span class="text-[0.65rem] text-slate-400">Cajero</span>
+                    <span class="font-bold text-slate-200 truncate w-full">💳 Carlos Cajero</span>
+                    <span class="text-[0.65rem] text-slate-400">Rol: Cajero</span>
                 </button>
             </div>
         </div>
