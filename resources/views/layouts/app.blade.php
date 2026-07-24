@@ -121,47 +121,42 @@ body::before{
             </div>
 
             @auth
-                @if(auth()->user()->hasRole('dueño') || auth()->user()->hasRole('administrador') || auth()->user()->role === 'cajero')
+                @if(auth()->user()->hasRole('dueño') || auth()->user()->hasRole('administrador') || auth()->user()->hasRole('gerente') || auth()->user()->hasRole('cajero'))
                 <a href="{{ route('backoffice') }}" class="hidden sm:flex items-center text-amber-500 border border-amber-500/20 font-bold hover:bg-amber-500 hover:text-slate-950 transition-all text-sm shadow-lg shadow-amber-500/10" style="background: rgba(245,158,11,0.1); padding: 0.6rem 1.2rem; border-radius: 1rem; gap: 0.5rem;">
                     <span class="material-symbols-rounded" style="font-size: 20px;">admin_panel_settings</span>
                     Administración
                 </a>
                 @endif
                 <div style="position: relative;">
-                    <button id="user-menu-btn" class="flex items-center text-sm font-medium cursor-pointer hover:opacity-80 transition-opacity" style="gap: 1rem;" onclick="document.getElementById('user-dropdown').classList.toggle('hidden')">
-                        <div class="w-9 h-9 rounded-full bg-slate-800 border border-white/10 flex items-center justify-center">
-                            <span class="material-symbols-rounded text-[20px] text-amber-500">person</span>
+                    <button id="user-menu-btn" class="flex items-center text-sm font-medium cursor-pointer hover:opacity-80 transition-opacity" style="gap: 0.75rem;" onclick="document.getElementById('user-dropdown').classList.toggle('hidden')">
+                        <div class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center font-bold text-sm shadow-lg" style="background-color: #c79c5e; color: #0a0f18;">
+                            {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                         </div>
-                        <span class="hidden sm:block text-slate-200">{{ auth()->user()->name }}</span>
+                        <span class="hidden sm:block text-slate-200 font-semibold">{{ auth()->user()->name }}</span>
+                        <span class="material-symbols-rounded text-slate-400 text-lg">expand_more</span>
                     </button>
-                    <!-- Dropdown -->
+                    <!-- Dropdown Auth -->
                     <div id="user-dropdown" class="hidden" style="position: absolute; right: 0; top: 100%; margin-top: 0.75rem; width: 14rem; background-color: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 0.75rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); padding: 0.5rem 0; z-index: 50;">
+                        <div class="px-4 py-2 border-b border-white/5">
+                            <p class="text-xs text-slate-400">Conectado como</p>
+                            <p class="text-xs font-bold text-white truncate">{{ auth()->user()->email }}</p>
+                        </div>
                         <a href="{{ route('compras.index') }}" class="block text-sm text-slate-300 hover:bg-white/5 hover:text-white flex items-center transition-colors" style="gap: 0.5rem; padding: 0.6rem 1rem;"><span class="material-symbols-rounded" style="font-size: 18px;">history</span> Mis compras (historial)</a>
                         <a href="{{ route('settings') }}" class="block text-sm text-slate-300 hover:bg-white/5 hover:text-white flex items-center transition-colors" style="gap: 0.5rem; padding: 0.6rem 1rem;"><span class="material-symbols-rounded" style="font-size: 18px;">settings</span> Configuración</a>
                         <div class="border-t border-white/5" style="margin: 0.5rem 0;"></div>
-                        <a href="#" class="block text-sm text-red-400 hover:bg-white/5 flex items-center transition-colors" style="gap: 0.5rem; padding: 0.6rem 1rem;"><span class="material-symbols-rounded" style="font-size: 18px;">logout</span> Cerrar sesión</a>
+                        <form method="POST" action="{{ route('logout') }}" id="logout-form">
+                            @csrf
+                            <button type="submit" class="w-full text-left text-sm text-red-400 hover:bg-white/5 flex items-center transition-colors cursor-pointer" style="gap: 0.5rem; padding: 0.6rem 1rem;">
+                                <span class="material-symbols-rounded" style="font-size: 18px;">logout</span> Cerrar sesión
+                            </button>
+                        </form>
                     </div>
                 </div>
             @else
-                <a href="{{ route('backoffice') }}" class="hidden sm:flex items-center border font-bold transition-all text-sm shadow-lg" style="color: #c79c5e; border-color: rgba(199,156,94,0.3); background: rgba(199,156,94,0.1); padding: 0.6rem 1.2rem; border-radius: 1rem; gap: 0.5rem;" onmouseover="this.style.backgroundColor='#c79c5e'; this.style.color='#0a0f18';" onmouseout="this.style.backgroundColor='rgba(199,156,94,0.1)'; this.style.color='#c79c5e';">
-                    <span class="material-symbols-rounded" style="font-size: 20px;">admin_panel_settings</span>
-                    Administración
+                <a href="{{ route('login') }}" class="font-bold text-xs shadow-xl transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2 cursor-pointer" style="background-color: #c79c5e; color: #0a0f18; padding: 0.65rem 1.25rem; border-radius: 1rem; border: none;">
+                    <span class="material-symbols-rounded text-base">login</span>
+                    <span>Iniciar Sesión</span>
                 </a>
-                <div style="position: relative;">
-                    <button id="user-menu-btn-guest" class="flex items-center text-sm font-medium cursor-pointer hover:opacity-80 transition-opacity" style="gap: 1rem;" onclick="document.getElementById('user-dropdown-guest').classList.toggle('hidden')">
-                        <div class="w-9 h-9 rounded-full bg-slate-800 border border-white/10 flex items-center justify-center">
-                            <span class="material-symbols-rounded text-[20px]" style="color: #c79c5e;">person</span>
-                        </div>
-                        <span class="hidden sm:block text-slate-200">Oscar Dueño</span>
-                    </button>
-                    <!-- Dropdown -->
-                    <div id="user-dropdown-guest" class="hidden" style="position: absolute; right: 0; top: 100%; margin-top: 0.75rem; width: 14rem; background-color: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 0.75rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); padding: 0.5rem 0; z-index: 50;">
-                        <a href="{{ route('compras.index') }}" class="block text-sm text-slate-300 hover:bg-white/5 hover:text-white flex items-center transition-colors" style="gap: 0.5rem; padding: 0.6rem 1rem;"><span class="material-symbols-rounded" style="font-size: 18px;">history</span> Mis compras (historial)</a>
-                        <a href="{{ route('settings') }}" class="block text-sm text-slate-300 hover:bg-white/5 hover:text-white flex items-center transition-colors" style="gap: 0.5rem; padding: 0.6rem 1rem;"><span class="material-symbols-rounded" style="font-size: 18px;">settings</span> Configuración</a>
-                        <div class="border-t border-white/5" style="margin: 0.5rem 0;"></div>
-                        <a href="#" class="block text-sm text-red-400 hover:bg-white/5 flex items-center transition-colors" style="gap: 0.5rem; padding: 0.6rem 1rem;"><span class="material-symbols-rounded" style="font-size: 18px;">logout</span> Cerrar sesión</a>
-                    </div>
-                </div>
             @endauth
         </div>
     </header>

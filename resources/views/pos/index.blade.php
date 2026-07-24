@@ -638,6 +638,13 @@ function sendAddToCartRequest(productId, modifiers, totalPrice, btn) {
   })
   .then(res => res.json())
   .then(data => {
+    if(data.require_login) {
+      if(typeof toast === 'function') toast(data.message || 'Debes iniciar sesión para agregar productos al carrito', 'error');
+      setTimeout(() => {
+        window.location.href = data.redirect_url || '{{ route("login") }}';
+      }, 1000);
+      return;
+    }
     if(data.success) {
       updateCartUI(data.cart, btn);
       if(typeof toast === 'function') toast('Producto agregado al carrito', 'success');

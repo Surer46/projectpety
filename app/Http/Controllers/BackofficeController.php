@@ -15,6 +15,10 @@ class BackofficeController extends Controller
 {
     public function index(Request $request)
     {
+        if (!auth()->user()->hasRole('dueño') && !auth()->user()->hasRole('administrador') && !auth()->user()->hasRole('gerente') && !auth()->user()->hasRole('cajero')) {
+            return redirect()->route('pos')->with('error', 'Acceso denegado: Se requieren permisos administrativos.');
+        }
+
         $tab = $request->query('tab', 'usuarios');
 
         // Fetch users with their roles via DB join

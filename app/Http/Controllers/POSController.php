@@ -137,13 +137,18 @@ class POSController extends Controller
 
     public function cart(Request $request)
     {
+        if (!auth()->check()) {
+            return redirect()->route('login', ['redirect' => route('cart.index')])
+                ->with('status', 'Inicia sesión para revisar tu carrito y procesar tu pedido.');
+        }
+
         $cart = $request->session()->get('pos_cart', []);
         $total = 0;
         foreach ($cart as $item) {
             $total += $item['total_price'] * $item['quantity'];
         }
 
-        $userId = 1; // Simulated auth user
+        $userId = auth()->id();
         $hasActiveCashSession = DB::table('cash_sessions')
             ->where('user_id', $userId)
             ->where('status', 'open')
@@ -165,6 +170,15 @@ class POSController extends Controller
 
     public function addToCart(Request $request)
     {
+        if (!auth()->check()) {
+            return response()->json([
+                'success' => false,
+                'require_login' => true,
+                'message' => 'Debes iniciar sesión para agregar productos al carrito.',
+                'redirect_url' => route('login', ['redirect' => route('pos')])
+            ], 401);
+        }
+
         $product = \App\Models\Product::findOrFail($request->input('product_id'));
         $cart = $request->session()->get('pos_cart', []);
         
