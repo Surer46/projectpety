@@ -72,13 +72,17 @@ RUN composer install \
     --no-dev \
     --optimize-autoloader \
     --no-interaction \
-    --prefer-dist
+    --prefer-dist \
+    --no-scripts
 
 # Instalar dependencias Node
 RUN npm ci
 
 # Copiar el resto del código fuente
 COPY . .
+
+# Ejecutar scripts de descubrimiento de paquetes Laravel post-copia
+RUN php artisan package:discover --ansi
 
 # Compilar assets con Vite (Tailwind v4 + JS)
 RUN npm run build
